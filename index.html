@@ -17,23 +17,27 @@
   <body>
     <main class="container">
       <h1 class="display-2 mt-5 mb-4">Fibonacci Calculator</h1>
-      <p
-        class="d-flex row-cols-auto align-items-center justify-content-start gap-3"
+      <div
+        class="d-flex flex-nowrap align-items-center justify-content-start gap-3"
       >
         <span>The Fibonacci of</span>
-        <input
-          type="number"
-          placeholder="#"
-          class="form-control w-25"
-          id="inputNumber"
-        />
-        <button class="btn btn-primary" id="submit">is</button>
-        <b>
-          <u>
-            <span class="fibonacci"> </span>
-          </u>
-        </b>
-      </p>
+        <div class="input-group has-validation d-flex position-relative w-25">
+          <input
+            type="number"
+            placeholder="#"
+            class="form-control w-25"
+            id="inputNumber"
+          />
+          <div class="invalid-tooltip">Can't be larger than 50.</div>
+        </div>
+        <div>
+          <button class="btn btn-primary" id="submit">is</button>
+        </div>
+        <span class="fibonacci"> </span>
+        <div class="spinner-border spinner" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
     </main>
 
     <!-- JavaScript Bundle with Popper -->

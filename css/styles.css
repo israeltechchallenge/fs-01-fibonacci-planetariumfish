@@ -3,3 +3,11 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.spinner {
+  display: none;
+}
+
+.show {
+  display: block;
+}
