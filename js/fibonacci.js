@@ -1,25 +1,24 @@
+// page elements
+
+const button = document.getElementById("submit");
+const fibResult = document.querySelector(".fibonacci");
+
+// functions
+
 function fibonacci(fIndex) {
-  let n1 = 0;
-  let n2 = 1;
-  let result = 0;
-
-  if (fIndex === n1) {
-    result = 0;
+  if (fIndex <= 1) {
+    return fIndex;
   } else {
-    for (i = 1; i < fIndex; i++) {
-      result = n1 + n2;
-      n1 = n2;
-      n2 = result;
-    }
+    return fibonacci(fIndex - 1) + fibonacci(fIndex - 2);
   }
-
-  return result;
 }
 
-let inputIndex = 13;
-let fNumber = fibonacci(inputIndex);
+function giveResults() {
+  const inputIndex = document.getElementById("inputNumber").value;
+  const fNumber = fibonacci(inputIndex);
+  fibResult.innerText = fNumber;
+}
 
-let final = `The Fibonacci of ${inputIndex} is ${fNumber}`;
+// event listeners
 
-const fibResult = document.querySelector(".fibonacci");
-fibResult.innerText = final;
+button.addEventListener("click", giveResults);
