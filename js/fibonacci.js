@@ -1,6 +1,7 @@
 // constants
 
 const FIB_URL = "http://localhost:5050/fibonacci/";
+const HIST_URL = "http://localhost:5050/getFibonacciResults";
 
 // page elements
 
@@ -36,6 +37,16 @@ function giveResults() {
   }
 }
 
+function fibHistory() {
+  fetch(HIST_URL)
+    .then((response) => {
+      response.json();
+    })
+    .then((data) => {
+      console.log(data);
+    });
+}
+
 // event listeners
 
 button.addEventListener("click", giveResults);
@@ -45,5 +56,21 @@ input.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     button.click();
+  }
+});
+
+// source for the next two: https://stackoverflow.com/questions/37043867/how-to-avoid-decimal-values-in-input-type-number
+// prevent inputting or pasting decimal numbers
+
+input.addEventListener("keydown", (e) => {
+  if (e.key === ".") {
+    e.preventDefault();
+  }
+});
+
+input.addEventListener("paste", (e) => {
+  let pasteData = e.clipboardData.getData("text");
+  if (pasteData) {
+    pasteData.replace(/[^0-9]*/g, "");
   }
 });
