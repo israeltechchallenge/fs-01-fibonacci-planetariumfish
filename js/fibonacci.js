@@ -11,12 +11,17 @@ const input = document.getElementById("inputNumber");
 const spinner = document.querySelector(".spinner");
 const mainSpinner = document.querySelector(".main-spinner");
 const history = document.getElementById("search-history");
+const check = document.getElementById("saveCalc");
 
 // functions
 
-async function giveResults() {
+function startCalc() {
   const inputIndex = input.value;
+  if (check.checked) serverResults(inputIndex);
+  else localResults(inputIndex);
+}
 
+async function serverResults(inputIndex) {
   if (inputIndex < 51) {
     spinner.classList.add("show");
     input.classList.remove("is-invalid");
@@ -34,6 +39,15 @@ async function giveResults() {
     input.classList.add("is-invalid");
   }
   refresh();
+}
+
+function localResults(inputIndex) {
+  if (inputIndex < 51 && inputIndex > 0) {
+    input.classList.remove("is-invalid");
+    fibResult.innerHTML = `<b><u>${fibonacci(inputIndex)}</u></b>`;
+  } else {
+    input.classList.add("is-invalid");
+  }
 }
 
 async function fibHistory() {
@@ -70,16 +84,26 @@ function refresh() {
   fibHistory();
 }
 
+function fibonacci(n, memo = {}) {
+  if (n in memo) return memo[n];
+  if (n === 0) return 0;
+  if (n <= 2) return 1;
+  return (memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo));
+}
+
 // event listeners
 
-button.addEventListener("click", giveResults);
+button.addEventListener("click", startCalc);
 
 // source for the next two: https://stackoverflow.com/questions/37043867/how-to-avoid-decimal-values-in-input-type-number
-// prevent inputting or pasting decimal numbers
+// prevent inputting or pasting decimal numbers or negative numbers
 // triggers button click on enter
 
 input.addEventListener("keydown", (e) => {
   if (e.key === ".") {
+    e.preventDefault();
+  }
+  if (e.key === "-") {
     e.preventDefault();
   }
 
