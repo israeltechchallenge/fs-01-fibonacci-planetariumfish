@@ -14,43 +14,36 @@ const history = document.getElementById("search-history");
 
 // functions
 
-function giveResults() {
+async function giveResults() {
   const inputIndex = input.value;
 
   if (inputIndex < 51) {
     spinner.classList.add("show");
     input.classList.remove("is-invalid");
-    fetch(`${FIB_URL}${inputIndex}`).then((response) => {
-      if (!response.ok) {
-        response.text().then((data) => {
-          spinner.classList.remove("show");
-          fibResult.innerHTML = `<span class="text-danger">Server Error: ${data}</span>`;
-        });
-      } else {
-        response.json().then((data) => {
-          spinner.classList.remove("show");
-          const result = data.result;
-          fibResult.innerHTML = `<b><u>${result}</u></b>`;
-        });
-      }
-    });
+
+    try {
+      const response = await fetch(`${FIB_URL}${inputIndex}`);
+      spinner.classList.remove("show");
+      if (!response.ok) throw new Error(await response.text());
+      const data = await response.json();
+      fibResult.innerHTML = `<b><u>${data.result}</u></b>`;
+    } catch (err) {
+      fibResult.innerHTML = `<span class="text-danger">Server Error: ${err.message}</span>`;
+    }
   } else {
     input.classList.add("is-invalid");
   }
   refresh();
 }
 
-function fibHistory() {
-  fetch(HIST_URL)
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      displayHistory(data.results);
-    })
-    .catch((err) => {
-      history.innerText = "Fetch failed (The server is probably down)";
-    });
+async function fibHistory() {
+  try {
+    const response = await fetch(HIST_URL);
+    const data = await response.json();
+    displayHistory(data.results);
+  } catch (err) {
+    history.innerText = "Fetch failed (The server is probably down)";
+  }
 }
 
 function displayHistory(prevArray) {
