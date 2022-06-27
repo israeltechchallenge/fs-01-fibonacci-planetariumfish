@@ -14,15 +14,13 @@ const server = http.createServer((req, res) => {
   const reqURL = new URL(req.url, "http://localhost");
   res.writeHead(200, { "Content-Type": "application/json" });
   if (reqURL.pathname.startsWith("/fibonacci/")) {
-    const num = +reqURL.pathname.slice(11);
-    const result = fibonacci(num);
-    const json = JSON.stringify(
-      `{ number: ${num}, result: ${result}, createdDate: ${Date.now()} }`
-    );
+    const number = +reqURL.pathname.slice(11);
+    const result = fibonacci(number);
+    const json = { number, result, createdDate: Date.now() };
     results.push(json);
     res.write(json);
   } else if (reqURL.pathname === "/getFibonacciResults") {
-    res.write(JSON.stringify(`{ results: ${results} }`));
+    res.write({ results });
   }
   res.end();
 });
