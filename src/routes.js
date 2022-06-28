@@ -7,6 +7,8 @@ const app = express();
 
 app.use(cors());
 
+app.use(express.static("public/"));
+
 app.get("/fibonacci/:number", (req, res) => {
   const number = +req.params.number;
   const result = fibonacci(number);
@@ -27,6 +29,6 @@ app.get("/getFibonacciResults", (req, res) => {
     });
 });
 
-app.use("*", (req, res) => res.status(404).json({ error: "not found" }));
+// app.use("*", (req, res) => res.status(404).json({ error: "not found" }));
 
 module.exports = app;

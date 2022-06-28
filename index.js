@@ -25,23 +25,3 @@ connectToServer((err) => {
     console.log(`Listening on port: ${process.env.PORT}`)
   );
 });
-
-// // Create a new MongoClient
-// const client = new MongoClient(process.env.MONGO_URI);
-
-// async function run() {
-//   try {
-//     // Connect the client to the server
-//     await client.connect();
-//     // Establish and verify connection
-//     await client.db(process.env.DB).command({ ping: 1 });
-//     console.log("Connected successfully to server");
-//     app.listen(process.env.PORT, () =>
-//       console.log(`Listening on port: ${process.env.PORT}`)
-//     );
-//   } finally {
-//     // Ensures that the client will close when you finish/error
-//     await client.close();
-//   }
-// }
-// run().catch(console.dir);
