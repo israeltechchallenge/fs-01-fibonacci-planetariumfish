@@ -29,6 +29,6 @@ app.get("/getFibonacciResults", (req, res) => {
     });
 });
 
-// app.use("*", (req, res) => res.status(404).json({ error: "not found" }));
+app.use("*", (req, res) => res.status(404).json({ error: "not found" }));
 
 module.exports = app;
